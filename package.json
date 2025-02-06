@@ -56,6 +56,11 @@
     "@loopback/rest-explorer": "^7.0.10",
     "@loopback/service-proxy": "^7.0.10",
     "bson": "^6.10.2",
+    "dotenv": "^16.4.7",
+    "lodash": "^4.17.21",
+    "loopback-connector-mongodb": "^6.3.1",
+    "loopback-connector-postgresql": "^7.1.9",
+    "mongodb": "^6.13.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -63,6 +68,7 @@
     "@loopback/eslint-config": "^15.0.5",
     "@loopback/testlab": "^7.0.9",
     "@types/jest": "^29.5.14",
+    "@types/lodash": "^4.17.15",
     "@types/mocha": "^10.0.10",
     "@types/node": "^16.18.123",
     "eslint": "^8.57.1",

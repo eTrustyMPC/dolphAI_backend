@@ -1,9 +1,9 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository, HasManyRepositoryFactory, HasManyThroughRepositoryFactory, repository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Account, AccountRelations, TokenQuery, AccountToken, Token} from '../models';
-import {TokenQueryRepository} from './token-query.repository';
+import {Account, AccountRelations, AccountToken, Token, TokenQuery} from '../models';
 import {AccountTokenRepository} from './account-token.repository';
+import {TokenQueryRepository} from './token-query.repository';
 import {TokenRepository} from './token.repository';
 
 export class AccountRepository extends DefaultCrudRepository<
@@ -17,12 +17,12 @@ export class AccountRepository extends DefaultCrudRepository<
   public readonly accountTokens: HasManyRepositoryFactory<AccountToken, typeof Account.prototype.id>;
 
   public readonly tokens: HasManyThroughRepositoryFactory<Token, typeof Token.prototype.id,
-          TokenQuery,
-          typeof Account.prototype.id
-        >;
+    TokenQuery,
+    typeof Account.prototype.id
+  >;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>, @repository.getter('AccountTokenRepository') protected accountTokenRepositoryGetter: Getter<AccountTokenRepository>, @repository.getter('TokenRepository') protected tokenRepositoryGetter: Getter<TokenRepository>,
+    @inject('datasources.mongodb') dataSource: DbDataSource, @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>, @repository.getter('AccountTokenRepository') protected accountTokenRepositoryGetter: Getter<AccountTokenRepository>, @repository.getter('TokenRepository') protected tokenRepositoryGetter: Getter<TokenRepository>,
   ) {
     super(Account, dataSource);
     this.tokens = this.createHasManyThroughRepositoryFactoryFor('tokens', tokenRepositoryGetter, tokenQueryRepositoryGetter,);

@@ -1,9 +1,9 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository, HasManyRepositoryFactory, HasManyThroughRepositoryFactory, repository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Token, TokenRelations, TokenQuery, Account} from '../models';
-import {TokenQueryRepository} from './token-query.repository';
+import {Account, Token, TokenQuery, TokenRelations} from '../models';
 import {AccountRepository} from './account.repository';
+import {TokenQueryRepository} from './token-query.repository';
 
 export class TokenRepository extends DefaultCrudRepository<
   Token,
@@ -14,12 +14,12 @@ export class TokenRepository extends DefaultCrudRepository<
   public readonly tokenQueries: HasManyRepositoryFactory<TokenQuery, typeof Token.prototype.id>;
 
   public readonly accounts: HasManyThroughRepositoryFactory<Account, typeof Account.prototype.id,
-          TokenQuery,
-          typeof Token.prototype.id
-        >;
+    TokenQuery,
+    typeof Token.prototype.id
+  >;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>, @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>,
+    @inject('datasources.mongodb') dataSource: DbDataSource, @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>, @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>,
   ) {
     super(Token, dataSource);
     this.accounts = this.createHasManyThroughRepositoryFactoryFor('accounts', accountRepositoryGetter, tokenQueryRepositoryGetter,);
