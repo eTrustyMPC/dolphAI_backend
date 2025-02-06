@@ -26,18 +26,8 @@ coverage
 # Bower dependency directory (https://bower.io/)
 bower_components
 
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 node_modules/
-jspm_packages/
-
-# Typescript v1 declaration files
-typings/
 
 # Optional npm cache directory
 .npm
@@ -48,12 +38,6 @@ typings/
 # Optional REPL history
 .node_repl_history
 
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
 # dotenv environment variables file
 .env
 
@@ -62,6 +46,4 @@ typings/
 
 # Cache used by TypeScript's incremental build
 *.tsbuildinfo
-
-# Emacs auto-save file
-\#*#
+.vercel
