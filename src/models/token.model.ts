@@ -1,7 +1,7 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {ObjectId} from 'bson';
-import {TokenQuery} from './token-query.model';
 import {Account} from './account.model';
+import {TokenQuery} from './token-query.model';
 
 @model({
   settings: {
@@ -20,21 +20,25 @@ export class Token extends Entity {
   id?: string;
 
   @property({
+    index: true,
     type: 'string',
   })
   address?: string;
 
   @property({
+    index: true,
     type: 'string',
   })
   coinType?: string;
 
   @property({
+    index: true,
     type: 'string',
   })
   coinName?: string;
 
   @property({
+    index: true,
     type: 'string',
   })
   coinSymbol?: string;
@@ -45,6 +49,7 @@ export class Token extends Entity {
   imgUrl?: string;
 
   @property({
+    index: true,
     type: 'string',
   })
   description?: string;
@@ -55,76 +60,89 @@ export class Token extends Entity {
   securityMessage?: string;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   decimals?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   price?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   dominance?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   marketCap?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   circulatingSupply?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   totalSupply?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   maxSupply?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   volume?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   fdv?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   holdersCount?: number;
 
   @property({
+    index: true,
     type: 'boolean',
   })
   isVerified?: boolean;
 
   @property({
+    index: true,
     type: 'boolean',
   })
   isBridged?: boolean;
 
   @property({
+    index: true,
     type: 'string',
   })
   socialWebsite?: string;
@@ -150,33 +168,39 @@ export class Token extends Entity {
   socialTwitter?: string;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   queryCount?: number;
 
   @property({
+    index: true,
     type: 'number',
     default: 0,
   })
   uniqueQueryCount?: number;
 
   @property({
+    index: true,
     type: 'string',
   })
   gptSummary?: string;
 
   @property({
+    index: true,
     type: 'date',
   })
   onChainAt?: string;
 
   @property({
+    index: true,
     type: 'date',
   })
   createdAt?: string;
 
   @property({
+    index: true,
     type: 'date',
   })
   updatedAt?: string;

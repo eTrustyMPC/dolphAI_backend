@@ -20,20 +20,25 @@ export class TokenQuery extends Entity {
   id?: string;
 
   @property({
+    index: true,
     type: 'string',
   })
   searchStr?: string;
+
   @property({
+    index: true,
     type: 'date',
   })
   createdAt?: string;
 
   @property({
+    index: true,
     type: 'date',
   })
   updatedAt?: string;
 
   @property({
+    index: true,
     type: 'string',
     default: "pending",
   })

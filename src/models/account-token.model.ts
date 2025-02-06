@@ -1,6 +1,7 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {ObjectId} from 'bson';
 import {Account} from './account.model';
+import {Token} from './token.model';
 
 @model({
   settings: {
@@ -18,22 +19,22 @@ export class AccountToken extends Entity {
   })
   id?: string;
   @property({
-    type: 'string',
-  })
-  tokenId?: string;
-
-  @property({
     type: 'date',
+    index: true,
   })
   createdAt?: string;
 
   @property({
     type: 'date',
+    index: true,
   })
   updatedAt?: string;
 
   @belongsTo(() => Account)
   accountId: string;
+
+  @belongsTo(() => Token)
+  tokenId: string;
 
   constructor(data?: Partial<AccountToken>) {
     super(data);

@@ -1,7 +1,7 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {ObjectId} from 'bson';
-import {TokenQuery} from './token-query.model';
 import {AccountToken} from './account-token.model';
+import {TokenQuery} from './token-query.model';
 import {Token} from './token.model';
 
 @model({
@@ -21,28 +21,28 @@ export class Account extends Entity {
   id?: string;
 
   @property({
-    type: 'string',
     index: true,
+    type: 'string',
     unique: true,
   })
   address?: string;
 
   @property({
-    type: 'number',
     index: true,
+    type: 'number',
     default: 0,
   })
   queryCount?: number;
 
   @property({
-    type: 'date',
     index: true,
+    type: 'date',
   })
   createdAt?: string;
 
   @property({
-    type: 'date',
     index: true,
+    type: 'date',
   })
   updatedAt?: string;
 
