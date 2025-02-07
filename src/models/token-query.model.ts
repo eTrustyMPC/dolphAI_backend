@@ -5,6 +5,7 @@ import {Token} from './token.model';
 
 @model({
   settings: {
+    description: "Search query from user wallet about Token",
     strict: true,
     forceId: true,
     strictObjectIDCoercion: true,

@@ -16,7 +16,7 @@ export class TokenQueryRepository extends DefaultCrudRepository<
   public readonly token: BelongsToAccessor<Token, typeof TokenQuery.prototype.id>;
 
   constructor(
-    @inject('datasources.mongodb') dataSource: DbDataSource,
+    @inject('datasources.postgres') dataSource: DbDataSource,
     @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>,
     @repository.getter('TokenRepository') protected tokenRepositoryGetter: Getter<TokenRepository>,
   ) {

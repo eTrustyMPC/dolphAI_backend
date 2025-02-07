@@ -22,7 +22,7 @@ export class AccountRepository extends DefaultCrudRepository<
   >;
 
   constructor(
-    @inject('datasources.mongodb') dataSource: DbDataSource,
+    @inject('datasources.postgres') dataSource: DbDataSource,
     @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>,
     @repository.getter('AccountTokenRepository') protected accountTokenRepositoryGetter: Getter<AccountTokenRepository>,
     @repository.getter('TokenRepository') protected tokenRepositoryGetter: Getter<TokenRepository>,
