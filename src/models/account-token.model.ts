@@ -5,8 +5,9 @@ import {Token} from './token.model';
 
 @model({
   settings: {
+    description: "Favorite tokens for SUI accounts",
     strict: true,
-    forceId: false,
+    forceId: true,
     strictObjectIDCoercion: true,
   }
 })
@@ -15,18 +16,20 @@ export class AccountToken extends Entity {
     type: 'string',
     id: true,
     generated: false,
-    default: () => (new ObjectId()).toString(),
+    default: () => (new ObjectId()).toString()
   })
   id?: string;
   @property({
     type: 'date',
     index: true,
+    hidden: true
   })
   createdAt?: string;
 
   @property({
     type: 'date',
     index: true,
+    hidden: true
   })
   updatedAt?: string;
 

@@ -16,7 +16,9 @@ export class AccountTokenRepository extends DefaultCrudRepository<
   public readonly token: BelongsToAccessor<Token, typeof AccountToken.prototype.id>;
 
   constructor(
-    @inject('datasources.mongodb') dataSource: DbDataSource, @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>, @repository.getter('TokenRepository') protected tokenRepositoryGetter: Getter<TokenRepository>,
+    @inject('datasources.mongodb') dataSource: DbDataSource,
+    @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>,
+    @repository.getter('TokenRepository') protected tokenRepositoryGetter: Getter<TokenRepository>,
   ) {
     super(AccountToken, dataSource);
     this.token = this.createBelongsToAccessorFor('token', tokenRepositoryGetter,);

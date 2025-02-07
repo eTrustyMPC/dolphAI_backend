@@ -19,7 +19,9 @@ export class TokenRepository extends DefaultCrudRepository<
   >;
 
   constructor(
-    @inject('datasources.mongodb') dataSource: DbDataSource, @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>, @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>,
+    @inject('datasources.mongodb') dataSource: DbDataSource,
+    @repository.getter('TokenQueryRepository') protected tokenQueryRepositoryGetter: Getter<TokenQueryRepository>,
+    @repository.getter('AccountRepository') protected accountRepositoryGetter: Getter<AccountRepository>,
   ) {
     super(Token, dataSource);
     this.accounts = this.createHasManyThroughRepositoryFactoryFor('accounts', accountRepositoryGetter, tokenQueryRepositoryGetter,);

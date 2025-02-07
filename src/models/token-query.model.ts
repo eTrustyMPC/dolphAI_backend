@@ -6,7 +6,7 @@ import {Token} from './token.model';
 @model({
   settings: {
     strict: true,
-    forceId: false,
+    forceId: true,
     strictObjectIDCoercion: true,
   }
 })
@@ -22,18 +22,23 @@ export class TokenQuery extends Entity {
   @property({
     index: true,
     type: 'string',
+    jsonSchema: {
+      description: "User input used for search"
+    }
   })
   searchStr?: string;
 
   @property({
     index: true,
     type: 'date',
+    hidden: true
   })
   createdAt?: string;
 
   @property({
     index: true,
     type: 'date',
+    hidden: true
   })
   updatedAt?: string;
 
@@ -41,6 +46,7 @@ export class TokenQuery extends Entity {
     index: true,
     type: 'string',
     default: "pending",
+    hidden: true
   })
   status?: string;
 

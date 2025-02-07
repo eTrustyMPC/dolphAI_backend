@@ -1,10 +1,10 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
-import {ObjectId} from 'bson';
 import {Account} from './account.model';
 import {TokenQuery} from './token-query.model';
 
 @model({
   settings: {
+    description: "SUI tokens",
     strict: true,
     forceId: false,
     strictObjectIDCoercion: true,
@@ -15,13 +15,24 @@ export class Token extends Entity {
     type: 'string',
     id: true,
     generated: false,
-    default: () => (new ObjectId()).toString(),
+    jsonSchema: {
+      description: "SUI token address",
+      examples: [
+        "0xaf9ef585e2efd13321d0a2181e1c0715f9ba28ed052055d33a8b164f6c146a56::tusdt::TUSDT"
+      ]
+    }
   })
   id?: string;
 
   @property({
     index: true,
     type: 'string',
+    jsonSchema: {
+      description: "Address in hex (tail metadata removed)",
+      examples: [
+        "0xaf9ef585e2efd13321d0a2181e1c0715f9ba28ed052055d33a8b164f6c146a56"
+      ]
+    }
   })
   address?: string;
 
@@ -196,12 +207,14 @@ export class Token extends Entity {
   @property({
     index: true,
     type: 'date',
+    hidden: true
   })
   createdAt?: string;
 
   @property({
     index: true,
     type: 'date',
+    hidden: true
   })
   updatedAt?: string;
 

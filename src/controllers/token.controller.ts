@@ -7,24 +7,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
-import {Token} from '../models';
+import {Account, Token, TokenQuery} from '../models';
 import {TokenRepository} from '../repositories';
 
 export class TokenController {
   constructor(
     @repository(TokenRepository)
-    public tokenRepository : TokenRepository,
-  ) {}
+    public tokenRepository: TokenRepository,
+  ) { }
 
   @post('/tokens')
   @response(200, {
@@ -37,12 +37,12 @@ export class TokenController {
         'application/json': {
           schema: getModelSchemaRef(Token, {
             title: 'NewToken',
-            exclude: ['id'],
+            exclude: ['createdAt', 'updatedAt'],
           }),
         },
       },
     })
-    token: Omit<Token, 'id'>,
+    token: Token, //Omit<Token, 'id'>,
   ): Promise<Token> {
     return this.tokenRepository.create(token);
   }
@@ -76,7 +76,7 @@ export class TokenController {
     return this.tokenRepository.find(filter);
   }
 
-  @patch('/tokens')
+  /*@patch('/tokens')
   @response(200, {
     description: 'Token PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -93,7 +93,7 @@ export class TokenController {
     @param.where(Token) where?: Where<Token>,
   ): Promise<Count> {
     return this.tokenRepository.updateAll(token, where);
-  }
+  }*/
 
   @get('/tokens/{id}')
   @response(200, {
@@ -120,7 +120,7 @@ export class TokenController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Token, {partial: true}),
+          schema: getModelSchemaRef(Token, {partial: true, exclude: ['createdAt', 'updatedAt']}),
         },
       },
     })
@@ -146,5 +146,46 @@ export class TokenController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tokenRepository.deleteById(id);
+  }
+
+  /// TokenQueries
+
+  @get('/tokens/{id}/token-queries', {
+    responses: {
+      '200': {
+        description: 'Array of Token has many TokenQuery',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(TokenQuery)},
+          },
+        },
+      },
+    },
+  })
+  async findTokenQueries(
+    @param.path.string('id') id: string,
+    @param.query.object('filter') filter?: Filter<TokenQuery>,
+  ): Promise<TokenQuery[]> {
+    return this.tokenRepository.tokenQueries(id).find(filter);
+  }
+
+  @get('/tokens/{id}/accounts', {
+    description: 'All wallets requested info about this token',
+    responses: {
+      '200': {
+        description: 'Array of Token has many Account through TokenQuery',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Account)},
+          },
+        },
+      },
+    },
+  })
+  async findAccountsRequestedThisToken(
+    @param.path.string('id') id: string,
+    @param.query.object('filter') filter?: Filter<Account>,
+  ): Promise<Account[]> {
+    return this.tokenRepository.accounts(id).find(filter);
   }
 }
