@@ -18,9 +18,9 @@ export class Account extends Entity {
     generated: false,
     jsonSchema: {
       description: "SUI wallet address",
-      examples: [
-        "0x3f3b11a18ffe59368cb935771df277ac531bf60b9a0a201c78e9d1aabe7bc214"
-      ]
+      //examples: [
+      //  "0x3f3b11a18ffe59368cb935771df277ac531bf60b9a0a201c78e9d1aabe7bc214"
+      //]
     }
   })
   id?: string;
