@@ -19,7 +19,7 @@ import {
 } from '@loopback/rest';
 import {Coin, CoinData, CoinMetaData, TokenLinks, TokenMetrics, TokenNewsItem} from '../models';
 import {CoinDataRepository, CoinMetaDataRepository, CoinRepository} from '../repositories';
-import {Blockberry, NewsItem, Searapi} from '../services';
+import {Atoma, Blockberry, NewsItem, Searapi} from '../services';
 
 //const envData = loadEnv()?.parsed;
 
@@ -34,6 +34,7 @@ export class CoinController {
     @repository(CoinMetaDataRepository) protected coinMetaDataRepository: CoinMetaDataRepository,
     @inject('services.blockberry') protected blockberry: Blockberry,
     @inject('services.searapi') protected searapi: Searapi,
+    @inject('services.atoma') protected atoma: Atoma,
   ) { }
 
   @post('/coins')
@@ -329,9 +330,33 @@ export class CoinController {
         };
         newsItems.push(newsItem);
       }
-      await this.coinRepository.updateById(id, {news: newsItems})
+      await this.coinRepository.updateById(id, {news: newsItems});
       //console.log(newsItems);
     }
+
+    if ((coin.description) && (!coin.llmSummary)) {
+      const llmPrompt = `I have a default description of ${coin.symbol} crypto token: ` +
+        `'${coin.description}'. ` +
+        "Could you please transfrom and make value proposition " +
+        "more clear and human readable (for basic crypto user) of the project, " +
+        "base on the information you have and you can search. " +
+        "Otherwise return provided basic value. 2-3 sentances max.";
+      const llmMessages = [
+        {
+          "role": "user",
+          "content": llmPrompt,
+        }
+      ];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let llmResponse: any = await this.atoma.simplePrompt(llmMessages);
+      llmResponse = llmResponse[0];
+      llmResponse = llmResponse[0];
+      console.log(llmResponse);
+      const llmSummary = llmResponse.message.content;
+
+      await this.coinRepository.updateById(id, {llmSummary: llmSummary});
+    }
+
     // update query count
     let newQueryCount = coin?.queryCount;
     if (!newQueryCount) {

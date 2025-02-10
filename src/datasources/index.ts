@@ -3,3 +3,4 @@ export * from './db.datasource';
 export * from './postgres.datasource';
 export * from './searapi.datasource';
 
+export * from './atoma.datasource';
