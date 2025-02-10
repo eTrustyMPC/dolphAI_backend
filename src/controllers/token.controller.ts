@@ -1,3 +1,4 @@
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -19,11 +20,13 @@ import {
 } from '@loopback/rest';
 import {Account, Token, TokenQuery} from '../models';
 import {TokenRepository} from '../repositories';
+import {Blockberry} from '../services';
 
 export class TokenController {
   constructor(
     @repository(TokenRepository)
     public tokenRepository: TokenRepository,
+    @inject('services.blockberry') protected blockberryService: Blockberry,
   ) { }
 
   @post('/tokens')

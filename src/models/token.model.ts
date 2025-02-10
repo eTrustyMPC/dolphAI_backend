@@ -4,7 +4,7 @@ import {TokenQuery} from './token-query.model';
 
 @model({
   settings: {
-    description: "SUI tokens",
+    description: "SUI token",
     strict: true,
     forceId: false,
     strictObjectIDCoercion: true,
@@ -39,6 +39,7 @@ export class Token extends Entity {
   @property({
     index: true,
     type: 'string',
+
   })
   coinType?: string;
 
