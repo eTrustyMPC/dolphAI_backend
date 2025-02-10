@@ -34,190 +34,190 @@ export class Token extends Entity {
       //]
     }
   })
-  address?: string;
+  address?: string | null;
 
   @property({
     index: true,
     type: 'string',
 
   })
-  coinType?: string;
+  coinType?: string | null;
 
   @property({
     index: true,
     type: 'string',
   })
-  coinName?: string;
+  coinName?: string | null;
 
   @property({
     index: true,
     type: 'string',
   })
-  coinSymbol?: string;
+  coinSymbol?: string | null;
 
   @property({
     type: 'string',
   })
-  imgUrl?: string;
+  imgUrl?: string | null;
 
   @property({
     index: true,
     type: 'string',
   })
-  description?: string;
+  description?: string | null;
 
   @property({
     type: 'string',
   })
-  securityMessage?: string;
+  securityMessage?: string | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  decimals?: number;
+  decimals?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  price?: number;
+  price?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  dominance?: number;
+  dominance?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  marketCap?: number;
+  marketCap?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  circulatingSupply?: number;
+  circulatingSupply?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  totalSupply?: number;
+  totalSupply?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  maxSupply?: number;
+  maxSupply?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  volume?: number;
+  volume?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  fdv?: number;
+  fdv?: number | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  holdersCount?: number;
+  holdersCount?: number | null;
 
   @property({
     index: true,
     type: 'boolean',
   })
-  isVerified?: boolean;
+  isVerified?: boolean | null;
 
   @property({
     index: true,
     type: 'boolean',
   })
-  isBridged?: boolean;
+  isBridged?: boolean | null;
 
   @property({
     index: true,
     type: 'string',
   })
-  socialWebsite?: string;
+  socialWebsite?: string | null;
 
   @property({
     type: 'string',
   })
-  socialDiscord?: string;
+  socialDiscord?: string | null;
 
   @property({
     type: 'string',
   })
-  socialGitHub?: string;
+  socialGitHub?: string | null;
 
   @property({
     type: 'string',
   })
-  socialTelegram?: string;
+  socialTelegram?: string | null;
 
   @property({
     type: 'string',
   })
-  socialTwitter?: string;
-
-  @property({
-    index: true,
-    type: 'number',
-    default: 0,
-  })
-  queryCount?: number;
+  socialTwitter?: string | null;
 
   @property({
     index: true,
     type: 'number',
     default: 0,
   })
-  uniqueQueryCount?: number;
+  queryCount?: number | null;
+
+  @property({
+    index: true,
+    type: 'number',
+    default: 0,
+  })
+  uniqueQueryCount?: number | null;
 
   @property({
     index: true,
     type: 'string',
   })
-  gptSummary?: string;
+  gptSummary?: string | null;
 
   @property({
     index: true,
     type: 'date',
   })
-  onChainAt?: string;
+  onChainAt?: string | null;
 
   @property({
     index: true,
     type: 'date',
     hidden: true
   })
-  createdAt?: string;
+  createdAt?: string | null;
 
   @property({
     index: true,
     type: 'date',
     hidden: true
   })
-  updatedAt?: string;
+  updatedAt?: string | null;
 
   @hasMany(() => TokenQuery)
   tokenQueries: TokenQuery[];

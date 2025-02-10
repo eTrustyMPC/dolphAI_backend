@@ -9,9 +9,11 @@ export interface CoinMetadata {
   decimals: number,
   imgUrl: string,
   description: string,
-  totalSupply: number,
   circulatingSupply: number,
   marketCap: number,
+  securityMessage: string,
+  // unique fields
+  totalSupply: number,
   volume: number,
   socialWebsite: string,
   socialDiscord: string,
@@ -19,7 +21,6 @@ export interface CoinMetadata {
   socialGitHub: string,
   socialTelegram: string,
   socialTwitter: string,
-  securityMessage: string
 }
 
 export interface CoinData {
@@ -59,6 +60,7 @@ export interface Blockberry {
   // json file.
   getCoinMetadata(coinType: string): Promise<CoinMetadata>;
   getCoinByCoinType(coinType: string): Promise<CoinData>;
+  getHoldersCountByCoinType(coinType: string): Promise<number>;
 }
 
 export class BlockberryProvider implements Provider<Blockberry> {

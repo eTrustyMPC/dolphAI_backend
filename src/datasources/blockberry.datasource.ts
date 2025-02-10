@@ -35,12 +35,25 @@ const config = {
         method: 'GET',
         url: 'https://api.blockberry.one/sui/v1/coins/{coinType}',
         query: {
-          coinType: '{coinType}'
+          coinType: '{coinType}',
         },
         //responsePath: '$.result.addressMatches[*].coordinates',
       },
       functions: {
         getCoinByCoinType: ['coinType'],
+      },
+    },
+    {
+      template: {
+        method: 'GET',
+        url: 'https://api.blockberry.one/sui/v1/coins/{coinType}/holders?page=0&size=1&orderBy=DESC&sortBy=AMOUNT',
+        query: {
+          coinType: '{coinType}',
+        },
+        responsePath: 'totalElements',
+      },
+      functions: {
+        getHoldersCountByCoinType: ['coinType'],
       },
     },
   ],

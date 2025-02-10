@@ -53,23 +53,27 @@ export class PingController {
   @get('/ping')
   @response(200, PING_RESPONSE)
   async ping(): Promise<object> {
-    const coinType = '0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0d217a93bf::coin::COIN';
+    const coinType = encodeURIComponent('0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0d217a93bf::coin::COIN');
+    const holdersCount = await this.blockberry.getHoldersCountByCoinType(coinType);
+    console.log(holdersCount);
+    await delay(100);
 
-    const coinMetadata = await this.blockberry.getCoinMetadata(coinType);
-    console.log('coinMetadata');
-    console.log(coinMetadata);
+    //const coinMetadata = await this.blockberry.getCoinMetadata(coinType);
+    //console.log('coinMetadata');
+    //console.log(coinMetadata);
 
-    await delay(15000);
+    //await delay(15000);
 
-    const coinData = await this.blockberry.getCoinByCoinType(coinType);
-    console.log(coinData);
+    //const coinData = await this.blockberry.getCoinByCoinType(coinType);
+    //console.log(coinData);
 
 
     // Reply with a greeting, the current time, the url, and request headers
     return {
       data: {
-        coinMetadata: coinMetadata,
-        coinData: coinData,
+        //coinMetadata: coinMetadata,
+        //coinData: coinData,
+        holdersCount: holdersCount,
       },
       greeting: 'Hello from LoopBack',
       date: new Date(),
