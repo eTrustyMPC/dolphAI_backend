@@ -217,7 +217,7 @@ export class CoinController {
     });
   }
 
-  @get('/coins/loadById/{id}')
+  @get('/coins/loadById')
   @response(200, {
     description: 'Coin model instance',
     content: {
@@ -227,7 +227,7 @@ export class CoinController {
     },
   })
   async loadById(
-    @param.path.string('id') id: string,
+    @param.query.string('id') id: string,
   ): Promise<Coin | null | undefined> {
     let coin = await this.coinRepository.findOne({
       where: {id: id}
@@ -273,7 +273,7 @@ export class CoinController {
         "metrics": null,
         "dynamics": null,
         "recentArticles": null,
-        "recentUpdates": null,
+        "recentUpdates": null, // deprecated
         "links": null,
         "stakingPools": null,
       }
