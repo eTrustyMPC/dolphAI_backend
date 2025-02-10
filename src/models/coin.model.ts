@@ -84,6 +84,44 @@ export class TokenDynamics extends Model {
   topHoldersConcentration?: number | null;
 }
 
+@model()
+export class TokenNewsItem extends Model {
+  @property({
+    type: 'number',
+  })
+  position: number;
+
+  @property({
+    type: 'string',
+  })
+  link: string;
+
+  @property({
+    type: 'string',
+  })
+  title: string;
+
+  @property({
+    type: 'string',
+  })
+  source: string;
+
+  @property({
+    type: 'string',
+  })
+  date: string;
+
+  @property({
+    type: 'string',
+  })
+  snippet: string;
+
+  @property({
+    type: 'string',
+  })
+  thumbnail: string;
+}
+
 
 @model({
   settings: {
@@ -199,6 +237,13 @@ export class Coin extends Entity {
   queryCount?: number;
 
   @property({
+    index: true,
+    type: 'number',
+    default: 0,
+  })
+  score?: number;
+
+  @property({
     type: TokenMetrics,
   })
   metrics?: TokenMetrics | null;
@@ -231,6 +276,11 @@ export class Coin extends Entity {
   })
   stakingPools?: string[] | null;
 
+  @property({
+    type: 'array',
+    itemType: TokenNewsItem,
+  })
+  news?: TokenNewsItem[] | null;
 
   constructor(data?: Partial<Coin>) {
     super(data);

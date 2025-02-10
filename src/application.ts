@@ -9,7 +9,7 @@ import {
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
-import {BlockberryProvider} from './services';
+import {BlockberryProvider, SearapiProvider} from './services';
 
 export {ApplicationConfig};
 
@@ -33,6 +33,7 @@ export class BackendApplication extends BootMixin(
 
     // blockberry
     this.service(BlockberryProvider, {interface: 'Blockberry', name: 'blockberry'});
+    this.service(SearapiProvider, {interface: 'Searapi', name: 'searapi'});
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

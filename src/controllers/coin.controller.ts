@@ -17,9 +17,11 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {Coin, CoinData, CoinMetaData, TokenLinks, TokenMetrics} from '../models';
+import {Coin, CoinData, CoinMetaData, TokenLinks, TokenMetrics, TokenNewsItem} from '../models';
 import {CoinDataRepository, CoinMetaDataRepository, CoinRepository} from '../repositories';
-import {Blockberry} from '../services';
+import {Blockberry, NewsItem, Searapi} from '../services';
+
+//const envData = loadEnv()?.parsed;
 
 function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -31,6 +33,7 @@ export class CoinController {
     @repository(CoinDataRepository) protected coinDataRepository: CoinDataRepository,
     @repository(CoinMetaDataRepository) protected coinMetaDataRepository: CoinMetaDataRepository,
     @inject('services.blockberry') protected blockberry: Blockberry,
+    @inject('services.searapi') protected searapi: Searapi,
   ) { }
 
   @post('/coins')
@@ -277,6 +280,7 @@ export class CoinController {
         "recentUpdates": null, // deprecated
         "links": null,
         "stakingPools": null,
+        "news": null,
       }
       coin = await this.coinRepository.create(newCoin)
 
@@ -302,6 +306,31 @@ export class CoinController {
         const links = new TokenLinks(coinLinks);
         await this.coinRepository.updateById(id, {links: links})
       }
+    }
+
+    if ((!coin?.news) || (coin?.news.length === 0)) {
+      const q = `${coin.symbol} crypto token`;
+      const searchResults0 = await this.searapi.searchNews(q);
+      const searchResults: Array<NewsItem> = searchResults0[0];
+      //console.log('searchResults');
+      //console.log(searchResults);
+
+      const newsItems = [];
+      for (const resultData of searchResults) {
+        //console.log(resultData);
+        const newsItem: DataObject<TokenNewsItem> = {
+          position: resultData.position,
+          link: resultData.link,
+          title: resultData.title,
+          source: resultData.source,
+          date: resultData.date,
+          snippet: resultData.snippet,
+          thumbnail: resultData.thumbnail,
+        };
+        newsItems.push(newsItem);
+      }
+      await this.coinRepository.updateById(id, {news: newsItems})
+      //console.log(newsItems);
     }
     // update query count
     let newQueryCount = coin?.queryCount;

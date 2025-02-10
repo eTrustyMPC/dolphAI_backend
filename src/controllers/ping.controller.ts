@@ -6,7 +6,7 @@ import {
   ResponseObject,
   RestBindings,
 } from '@loopback/rest';
-import {Blockberry} from '../services';
+import {Blockberry, Searapi} from '../services';
 
 function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -47,15 +47,20 @@ export class PingController {
   constructor(
     @inject(RestBindings.Http.REQUEST) private req: Request,
     @inject('services.blockberry') protected blockberry: Blockberry,
+    @inject('services.searapi') protected searapi: Searapi,
   ) { }
 
   // Map to `GET /ping`
   @get('/ping')
   @response(200, PING_RESPONSE)
   async ping(): Promise<object> {
-    const coinType = encodeURIComponent('0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0d217a93bf::coin::COIN');
-    const holdersCount = await this.blockberry.getHoldersCountByCoinType(coinType);
-    console.log(holdersCount);
+    //const coinType = encodeURIComponent('0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0d217a93bf::coin::COIN');
+    //const holdersCount = await this.blockberry.getHoldersCountByCoinType(coinType);
+    //console.log(holdersCount);
+    const q = "CETUS crypto token";
+    const searchResults = await this.searapi.searchNews(q);
+    console.log(searchResults);
+
     await delay(100);
 
     //const coinMetadata = await this.blockberry.getCoinMetadata(coinType);
@@ -73,7 +78,8 @@ export class PingController {
       data: {
         //coinMetadata: coinMetadata,
         //coinData: coinData,
-        holdersCount: holdersCount,
+        //holdersCount: holdersCount,
+        searchResults: searchResults,
       },
       greeting: 'Hello from LoopBack',
       date: new Date(),
