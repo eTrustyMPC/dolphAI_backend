@@ -1,23 +1,6 @@
 import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
-  Where,
+  repository
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-  response,
-} from '@loopback/rest';
-import {Account, Token, TokenQuery} from '../models';
 import {TokenQueryRepository} from '../repositories';
 
 export class TokenQueryController {
@@ -26,7 +9,7 @@ export class TokenQueryController {
     public tokenQueryRepository: TokenQueryRepository,
   ) { }
 
-  @post('/token-queries')
+  /*@post('/token-queries')
   @response(200, {
     description: 'TokenQuery model instance',
     content: {'application/json': {schema: getModelSchemaRef(TokenQuery)}},
@@ -95,7 +78,7 @@ export class TokenQueryController {
     return this.tokenQueryRepository.updateAll(tokenQuery, where);
   }*/
 
-  @get('/token-queries/{id}')
+  /*@get('/token-queries/{id}')
   @response(200, {
     description: 'TokenQuery model instance',
     content: {
@@ -184,5 +167,5 @@ export class TokenQueryController {
     @param.path.string('id') id: typeof TokenQuery.prototype.id,
   ): Promise<Token> {
     return this.tokenQueryRepository.token(id);
-  }
+  }*/
 }

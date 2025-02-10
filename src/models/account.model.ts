@@ -1,5 +1,7 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
+import {AccountCoin} from './account-coin.model';
 import {AccountToken} from './account-token.model';
+import {Coin} from './coin.model';
 import {TokenQuery} from './token-query.model';
 import {Token} from './token.model';
 
@@ -54,6 +56,9 @@ export class Account extends Entity {
 
   @hasMany(() => Token, {through: {model: () => TokenQuery}})
   tokens: Token[];
+
+  @hasMany(() => Coin, {through: {model: () => AccountCoin}})
+  coins: Coin[];
   // Define well-known properties here
 
   constructor(data?: Partial<Account>) {

@@ -1,24 +1,7 @@
 import {inject} from '@loopback/core';
 import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
-  Where,
+  repository
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-  response,
-} from '@loopback/rest';
-import {Account, Token, TokenQuery} from '../models';
 import {TokenRepository} from '../repositories';
 import {Blockberry} from '../services';
 
@@ -29,7 +12,7 @@ export class TokenController {
     @inject('services.blockberry') protected blockberryService: Blockberry,
   ) { }
 
-  @post('/tokens')
+  /*@post('/tokens')
   @response(200, {
     description: 'Token model instance',
     content: {'application/json': {schema: getModelSchemaRef(Token)}},
@@ -98,7 +81,7 @@ export class TokenController {
     return this.tokenRepository.updateAll(token, where);
   }*/
 
-  @get('/tokens/{id}')
+  /*@get('/tokens/{id}')
   @response(200, {
     description: 'Token model instance',
     content: {
@@ -149,11 +132,11 @@ export class TokenController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tokenRepository.deleteById(id);
-  }
+  }*/
 
   /// TokenQueries
 
-  @get('/tokens/{id}/token-queries', {
+  /*@get('/tokens/{id}/token-queries', {
     responses: {
       '200': {
         description: 'Array of Token has many TokenQuery',
@@ -190,5 +173,5 @@ export class TokenController {
     @param.query.object('filter') filter?: Filter<Account>,
   ): Promise<Account[]> {
     return this.tokenRepository.accounts(id).find(filter);
-  }
+  }*/
 }

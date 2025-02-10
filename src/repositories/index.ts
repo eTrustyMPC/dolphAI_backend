@@ -5,3 +5,4 @@ export * from './account-token.repository';
 export * from './coin.repository';
 export * from './coin-data.repository';
 export * from './coin-meta-data.repository';
+export * from './account-coin.repository';

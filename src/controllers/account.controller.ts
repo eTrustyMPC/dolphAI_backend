@@ -10,15 +10,13 @@ import {
   del,
   get,
   getModelSchemaRef,
-  getWhereSchemaFor,
   param,
-  patch,
   post,
   put,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
-import {Account, AccountToken, Token, TokenQuery} from '../models';
+import {Account} from '../models';
 import {AccountRepository} from '../repositories';
 
 export class AccountController {
@@ -26,6 +24,22 @@ export class AccountController {
     @repository(AccountRepository)
     public accountRepository: AccountRepository,
   ) { }
+
+  @put('/accounts/{id}/connect')
+  @response(200, {
+    description: 'Account model instance',
+    content: {'application/json': {schema: getModelSchemaRef(Account)}},
+  })
+  async connect(
+    @param.path.string('id') id: string,
+  ): Promise<Account> {
+    const hasConnectedAccount = await this.accountRepository.exists(id);
+    if (hasConnectedAccount === false) {
+      await this.accountRepository.create({id: id});
+      //return this.accountRepository.findById(id);
+    }
+    return this.accountRepository.findById(id);
+  }
 
   @post('/accounts')
   @response(200, {
@@ -112,7 +126,7 @@ export class AccountController {
     return this.accountRepository.findById(id, filter);
   }
 
-  @patch('/accounts/{id}')
+  /*@patch('/accounts/{id}')
   @response(204, {
     description: 'Account PATCH success',
   })
@@ -139,7 +153,7 @@ export class AccountController {
     @requestBody() account: Account,
   ): Promise<void> {
     await this.accountRepository.replaceById(id, account);
-  }
+  }*/
 
   @del('/accounts/{id}')
   @response(204, {
@@ -151,7 +165,7 @@ export class AccountController {
 
   /// Relations
 
-  @get('/accounts/{id}/tokens', {
+  /*@get('/accounts/{id}/tokens', {
     responses: {
       '200': {
         description: 'List of favorite tokens for account (as Token objects)',
@@ -213,7 +227,7 @@ export class AccountController {
     }) accountToken: Omit<AccountToken, 'id'>,
   ): Promise<AccountToken> {
     return this.accountRepository.accountTokens(id).create(accountToken);
-  }
+  }*/
 
   /*@patch('/accounts/{id}/account-tokens', {
     responses: {
@@ -238,7 +252,7 @@ export class AccountController {
     return this.accountRepository.accountTokens(id).patch(accountToken, where);
   }*/
 
-  @del('/accounts/{id}/account-tokens', {
+  /*@del('/accounts/{id}/account-tokens', {
     description: "Remove token from favorite tokens for this wallet",
     responses: {
       '200': {
@@ -252,11 +266,11 @@ export class AccountController {
     @param.query.object('where', getWhereSchemaFor(AccountToken)) where?: Where<AccountToken>,
   ): Promise<Count> {
     return this.accountRepository.accountTokens(id).delete(where);
-  }
+  }*/
 
   /// QUERIES
 
-  @get('/accounts/{id}/token-queries', {
+  /*@get('/accounts/{id}/token-queries', {
     description: "Find token query previously executed from this account",
     responses: {
       '200': {
@@ -324,7 +338,7 @@ export class AccountController {
     @param.query.object('where', getWhereSchemaFor(TokenQuery)) where?: Where<TokenQuery>,
   ): Promise<Count> {
     return this.accountRepository.tokenQueries(id).patch(tokenQuery, where);
-  }
+  }*/
 
   /*@del('/accounts/{id}/token-queries', {
     responses: {
