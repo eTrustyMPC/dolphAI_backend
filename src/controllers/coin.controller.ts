@@ -269,6 +269,7 @@ export class CoinController {
         "fdv": coinData.fdv,
         "volMktCap": null,
         "holders": coinData.holdersCount,
+        "queryCount": 0,
         // objects
         "metrics": null,
         "dynamics": null,
@@ -302,6 +303,14 @@ export class CoinController {
         await this.coinRepository.updateById(id, {links: links})
       }
     }
+    // update query count
+    let newQueryCount = coin?.queryCount;
+    if (!newQueryCount) {
+      newQueryCount = 1;
+    } else {
+      newQueryCount = parseInt(`${newQueryCount}`) + 1;
+    }
+    await this.coinRepository.updateById(id, {queryCount: newQueryCount});
 
     return this.coinRepository.findById(coin.id);
   }

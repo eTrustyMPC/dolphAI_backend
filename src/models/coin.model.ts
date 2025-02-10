@@ -192,6 +192,13 @@ export class Coin extends Entity {
   holders?: number | null;
 
   @property({
+    index: true,
+    type: 'number',
+    default: 0,
+  })
+  queryCount?: number;
+
+  @property({
     type: TokenMetrics,
   })
   metrics?: TokenMetrics | null;
